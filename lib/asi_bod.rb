@@ -1,4 +1,4 @@
 require 'asi_bod/version.rb'
-
-# Add requires for other files you add to your project here, so
-# you just need to require this one file in your bin file
+require 'asi_bod/cli.rb'
+require 'asi_bod/asi.rb'
+require 'asi_bod/bod.rb'
