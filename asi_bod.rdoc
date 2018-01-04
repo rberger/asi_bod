@@ -1,0 +1,5 @@
+= asi_bod
+
+Generate this with
+    asi_bod rdoc
+After you have described your command line interface
