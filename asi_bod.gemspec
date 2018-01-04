@@ -37,5 +37,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "aruba", "~> 0.14"
   spec.add_runtime_dependency "gli","~> 2.17"
   spec.add_runtime_dependency "nori","~> 2.6"
+  spec.add_runtime_dependency "nokogiri", "~> 1.8"
 
 end

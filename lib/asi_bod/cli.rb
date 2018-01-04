@@ -1,4 +1,6 @@
 require 'gli'
+require 'pp'
+
 module AsiBod
 
   class Cli
@@ -20,8 +22,24 @@ module AsiBod
       default_value 'BOD.json'
       flag [:b,:bod_file]
 
+      desc 'View the data'
+      command :view do |c|
+        c.desc "Pretty Print output of the simplified ASI ObjectDictionary as a hash"
+        c.command :asi do |asi| 
+          asi.action do |global_options,options,args|
+            asi = AsiBod::Asi.new(global_options,options,args)
+            pp asi.hash_data
+          end
+        end
+
+        c.command :bod do |bod|
+          bod.action do |global_options,options,args|
+            bod = AsiBod::Bod.new(global_options,options,args)
+            pp bod.hash_data
+          end
+        end
+      end
       desc 'Find a node in one of the files'
-      arg_name 'Describe arguments to find here'
       command :find do |c|
         c.desc 'Use XML File'
         c.switch [:x,:xml]
@@ -50,7 +68,7 @@ module AsiBod
         # chosen command
         # Use skips_pre before a command to skip this block
         # on that command only
-        Asi.new global,command,options,args
+        Asi.new global,options,args
         true
       end
 

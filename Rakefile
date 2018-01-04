@@ -10,6 +10,9 @@ Rake::RDocTask.new do |rd|
   rd.title = 'Your application title'
 end
 
+# task :rdoc_to_md
+# ruby -r rdoc -e 'puts RDoc::Markup::ToMarkdown.new.convert File.read(ARGV[0] || "README.rdoc")' >README.md
+
 spec = eval(File.read('asi_bod.gemspec'))
 
 Gem::PackageTask.new(spec) do |pkg|

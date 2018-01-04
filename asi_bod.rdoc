@@ -28,7 +28,7 @@ Display the program version
 
 
 === Commands
-==== Command: <tt>find  Describe arguments to find here</tt>
+==== Command: <tt>find </tt>
 Find a node in one of the files
 
 
@@ -50,5 +50,18 @@ List commands one per line, to assist with shell completion
 
 ==== Command: <tt>merge  Describe arguments to merge here</tt>
 Describe merge here
+
+
+==== Command: <tt>view </tt>
+View the data
+
+
+===== Commands
+====== Command: <tt>asi </tt>
+Pretty Print output of the simplified ASI ObjectDictionary as a hash
+
+
+====== Command: <tt>bod </tt>
+
 
 
