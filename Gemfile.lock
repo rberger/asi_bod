@@ -2,7 +2,8 @@ PATH
   remote: .
   specs:
     asi_bod (0.0.1)
-      gli (= 2.17.1)
+      gli (~> 2.17)
+      nori (~> 2.6)
 
 GEM
   remote: https://rubygems.org/
@@ -41,9 +42,19 @@ GEM
     gli (2.17.1)
     multi_json (1.12.2)
     multi_test (0.1.2)
-    rake (12.3.0)
+    nori (2.6.0)
+    rake (10.5.0)
     rdoc (6.0.1)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+    rspec-core (3.7.1)
+      rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
@@ -53,10 +64,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aruba
+  aruba (~> 0.14)
   asi_bod!
-  rake
+  bundler (~> 1.16)
+  rake (~> 10.0)
   rdoc
+  rspec (~> 3.0)
 
 BUNDLED WITH
    1.16.1

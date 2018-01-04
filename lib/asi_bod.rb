@@ -1,3 +1,4 @@
+require 'asi_bod/gli_patch.rb'
 require 'asi_bod/version.rb'
 require 'asi_bod/cli.rb'
 require 'asi_bod/asi.rb'
