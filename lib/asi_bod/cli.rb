@@ -39,7 +39,6 @@ module AsiBod
         view.desc "Pretty Print output of the simplified BOD as a hash"
         view.command :bod do |view_bod|
           view_bod.action do |global_options,options,args|
-            puts "view bod options: #{options} "
             pp bod.hash_data
           end
         end
