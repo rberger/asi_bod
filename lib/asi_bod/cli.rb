@@ -4,8 +4,12 @@ require 'pp'
 module AsiBod
 
   class Cli
+    attr_reader :asi
+    attr_reader :bod
+
     include GLI::App
 
+    GPARENT = GLI::Command::PARENT
     def main
       program_desc 'Manipulate and view the ASIObjectDictionary.xml and BOD.json files'
 
@@ -23,56 +27,85 @@ module AsiBod
       flag [:b,:bod_file]
 
       desc 'View the data'
-      command :view do |c|
-        c.desc "Pretty Print output of the simplified ASI ObjectDictionary as a hash"
-        c.command :asi do |asi| 
-          asi.action do |global_options,options,args|
-            asi = AsiBod::Asi.new(global_options,options,args)
+      command :view do |view|
+        view.desc "Pretty Print output of the simplified ASI ObjectDictionary as a hash"
+        view.command :asi do |view_asi| 
+          view_asi.action do |global_options,options,args|
             pp asi.hash_data
           end
         end
 
-        c.command :bod do |bod|
-          bod.action do |global_options,options,args|
-            bod = AsiBod::Bod.new(global_options,options,args)
+        view.desc "Pretty Print output of the simplified BOD as a hash"
+        view.command :bod do |view_bod|
+          view_bod.action do |global_options,options,args|
+            puts "view bod options: #{options} "
             pp bod.hash_data
           end
         end
       end
-      desc 'Find a node in one of the files'
-      command :find do |c|
-        c.desc 'Use XML File'
-        c.switch [:x,:xml]
 
-        c.action do |global_options,options,args|
+      desc 'Find a node in one or both of the dictionaries'
+      command :find do |find|
+        find.desc "Search the asi dictionary"
+        find.switch [:a, :asi] 
 
-          # Your command logic here
-          # If you have any errors, just raise them
-          # raise "that command made no sense"
+        find.desc "Search the bod dictionary"
+        find.switch [:b, :bod]
 
-          puts "find command ran global: #{global_options.inspect} options: #{options.inspect} args: #{args.inspect}"
+        find.desc "Find by register address"
+        find.long_desc %{Find by register address. } +
+                       %{Must select at least one of } +
+                       %{asi or bod and specify search_term}
+        find.arg 'address'
+        find.command :by_address do |find_by_address| 
+          find_by_address.action do |global_options,options,args|
+            address = args.first
+            puts "asi: => #{Dict.node_line(asi.hash_data[address.to_i])}" if options[GPARENT][:asi]
+            puts "bod: => #{Dict.node_line(bod.hash_data[address.to_i])}" if options[GPARENT][:bod]
+          end
+        end
+
+        find.desc "Find by the substring of a key"
+        find.long_desc %{Find by the substring of } +
+                       %{a Must select at least one of } +
+                       %{asi or bod and specify search_term}
+        find.arg 'node_key'
+        find.arg 'substring'
+        find.command :by_key_substring do |find_by_key_substring| 
+          find_by_key_substring.action do |global_options,options,args|
+            key = args[0].to_sym
+            substring = args[1]
+            if options[GPARENT][:asi]
+              puts "asi: key: #{key} substring: #{substring} => "
+              Dict.put_results(Dict.find_by_key_substring(asi.hash_data, key, substring))
+            end
+            if options[GPARENT][:bod]
+              puts "bod: key: #{key} substring: #{substring} => "
+              Dict.put_results(Dict.find_by_key_substring(bod.hash_data, key, substring))
+            end
+          end
         end
       end
 
-      desc 'Describe merge here'
-      arg_name 'Describe arguments to merge here'
-      command :merge do |c|
-        c.action do |global_options,options,args|
-          puts "merge command ran global: #{global_options.inspect} options: #{options.inspect} args: #{args.inspect}"
-        end
-      end
+      # desc 'Describe merge here'
+      # arg_name 'Describe arguments to merge here'
+      # command :merge do |c|
+      #   c.action do |global_options,options,args|
+      #     puts "merge command ran global: #{global_options.inspect} options: #{options.inspect} args: #{args.inspect}"
+      #   end
+      # end
 
-      pre do |global,command,options,args|
+      pre do |global_options,command,options,args|
         # Pre logic here
         # Return true to proceed; false to abort and not call the
         # chosen command
         # Use skips_pre before a command to skip this block
         # on that command only
-        Asi.new global,options,args
-        true
+        @asi = AsiBod::Asi.new(global_options,options,args)
+        @bod = AsiBod::Bod.new(global_options,options,args)
       end
 
-      post do |global,command,options,args|
+      post do |global_options,command,options,args|
         # Post logic here
         # Use skips_post before a command to skip this
         # block on that command only
