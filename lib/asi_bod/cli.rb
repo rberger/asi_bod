@@ -1,4 +1,5 @@
 require 'gli'
+require 'json'
 require 'pp'
 
 module AsiBod
@@ -87,13 +88,23 @@ module AsiBod
         end
       end
 
-      # desc 'Describe merge here'
-      # arg_name 'Describe arguments to merge here'
-      # command :merge do |c|
-      #   c.action do |global_options,options,args|
-      #     puts "merge command ran global: #{global_options.inspect} options: #{options.inspect} args: #{args.inspect}"
-      #   end
-      # end
+      desc 'Merge the Description from asi to bod'
+      long_desc 'Merge the Description from asi to bod ' +
+                'Do not merge if Description has "Reserved" in it ' +
+                'Or if the Bod doesnt have the key'
+      command :merge do |merge|
+        merge.desc 'Output Json'
+        merge.switch [:j, :json]
+        merge.action do |global_options,options,args|
+          raw_result = Dict.merge(asi.hash_data, bod.hash_data)
+          if options[:json]
+            result = JSON.pretty_generate raw_result
+          else
+            result = raw_result.pretty_inspect
+          end
+          puts result
+        end
+      end
 
       pre do |global_options,command,options,args|
         # Pre logic here

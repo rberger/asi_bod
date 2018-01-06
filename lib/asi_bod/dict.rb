@@ -27,6 +27,17 @@ module AsiBod
         puts Dict.node_line(node, keys)
       end
     end
+
+    def self.merge(asi, bod)
+      bod.each_with_object({}) do |(address, node), memo|
+        memo[address] = node
+        if (asi[address][:description].nil? ||
+            asi[address][:description].include?("Reserved") rescue true)
+          memo[address][:description] = nil
+        end
+        memo[address][:description] = asi[address][:description]
+      end
+    end
   end
 end
 
