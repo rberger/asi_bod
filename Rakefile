@@ -11,7 +11,8 @@ Rake::RDocTask.new do |rd|
 end
 
 # task :rdoc_to_md
-# ruby -r rdoc -e 'puts RDoc::Markup::ToMarkdown.new.convert File.read(ARGV[0] || "README.rdoc")' >README.md
+# ruby -r rdoc -e 'puts RDoc::Markup::ToMarkdown.new.convert File.read(ARGV[0] || "README.rdoc")' | grep -v ':include:' >README.md
+# ruby -r rdoc -e 'puts RDoc::Markup::ToMarkdown.new.convert File.read(ARGV[0] || "asi_bod.rdoc")' >> README.md
 
 spec = eval(File.read('asi_bod.gemspec'))
 

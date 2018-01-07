@@ -1,6 +1,6 @@
 == asi_bod - Manipulate and view the ASIObjectDictionary.xml and BOD.json files
 
-v0.0.1
+v0.1.0
 
 === Global Options
 === -a|--asi_file arg
@@ -17,8 +17,33 @@ Path to the BOD JSON file
 [Default Value] BOD.json
 
 
+=== --[no-]address_view
+View Address
+
+
+
+=== --[no-]description_view
+View Description
+
+
+
 === --help
 Show this message
+
+
+
+=== --[no-]name_view
+View Name
+
+
+
+=== -s|--[no-]scale_view
+View Scale
+
+
+
+=== -u|--[no-]units
+View Units
 
 
 
@@ -29,15 +54,29 @@ Display the program version
 
 === Commands
 ==== Command: <tt>find </tt>
-Find a node in one of the files
+Find a node in one or both of the dictionaries
 
 
 ===== Options
-===== -x|--[no-]xml
-Use XML File
+===== -a|--[no-]asi
+Search the asi dictionary
 
 
 
+===== -b|--[no-]bod
+Search the bod dictionary
+
+
+
+===== Commands
+====== Command: <tt>by_address </tt>
+Find by register address
+
+Find by register address. Must select at least one of asi or bod and specify search_term
+====== Command: <tt>by_key_substring </tt>
+Find by the substring of a key
+
+Find by the substring of a Must select at least one of asi or bod and specify search_term
 ==== Command: <tt>help  command</tt>
 Shows a list of commands or help for one command
 
@@ -48,12 +87,24 @@ List commands one per line, to assist with shell completion
 
 
 
-==== Command: <tt>merge  Describe arguments to merge here</tt>
-Describe merge here
+==== Command: <tt>merge </tt>
+Merge the Description from asi to bod
+
+Merge the Description from asi to bod Do not merge if Description has "Reserved" in it Or if the Bod doesnt have the key
+===== Options
+===== -j|--[no-]json
+Output Json
+
 
 
 ==== Command: <tt>view </tt>
 View the data
+
+
+===== Options
+===== -j|--[no-]json
+Output as Json instead of CSV
+
 
 
 ===== Commands
@@ -62,6 +113,7 @@ Pretty Print output of the simplified ASI ObjectDictionary as a hash
 
 
 ====== Command: <tt>bod </tt>
+Pretty Print output of the simplified BOD as a hash
 
 
-
+[Default Command] bod

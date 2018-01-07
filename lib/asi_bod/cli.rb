@@ -30,11 +30,11 @@ module AsiBod
       arguments :strict
 
       desc 'Path to the ASIObjectDictionary XML file'
-      default_value 'ASIObjectDictionary.xml'
+      default_value File.expand_path('../../../ASIObjectDictionary.xml', __FILE__)
       flag [:a,:asi_file]
 
       desc 'Path to the BOD JSON file'
-      default_value 'BOD.json'
+      default_value File.expand_path('../../../BODm.json', __FILE__)
       flag [:b,:bod_file]
 
       desc 'View Address'

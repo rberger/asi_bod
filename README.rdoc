@@ -1,6 +1,33 @@
-= asi_bod
+= NAME asi_bod
 
-Describe your project here
+- Manipulate and view the ASIObjectDictionary.xml and BOD.json files
+
+== SYNOPSIS
+    asi_bod [global options] command [command options] [arguments...]
+
+== Overview
+
+Tool to view, search and potentially merge the Grin Tech Phaserunner +BOD.json+
+file and the ASI +ASIObjectDictionary.xml+ file.
+
+The +BOD.json+ file is the original Grin Tech file that ships with the
++PhaseRunner v0.9.9.1+ software as of Jan 1 2018.
+
+This gem ships with +BODm.json+ which is the same as the Grin Tech +BOD.json+ except
+the Descriptions from the ASI +ASIObjectDictionary.xml+ file that shipped with the
++BacDoorSetup_1_5_4+ software.
+
+If you want to start with the original or another version of the +BOD.json+ or the
++ASIObjectDictionary.xml+ then you can override the defaults with the +-a,
+--asi_file+ or +-b, --bod_file+ flags
+
+== COMMANDS
+    find  - Find a node in one or both of the dictionaries
+    help  - Shows a list of commands or help for one command
+    merge - Merge the Description from asi to bod
+    view  - View the data
+
+== Detailed Command Line Info
 
 :include:asi_bod.rdoc
 
