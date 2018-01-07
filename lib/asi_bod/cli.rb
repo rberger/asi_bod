@@ -11,6 +11,16 @@ module AsiBod
     include GLI::App
 
     GPARENT = GLI::Command::PARENT
+    def which_keys(options)
+      options.map do |(k,v)|
+        if k.is_a?(String) && k.include?("_view")
+          # Its a view key
+          # Strip off the '_view' and convert to a symbol
+          k[0..(k.index("_view") - 1)].to_sym
+        end
+      end.compact
+    end
+
     def main
       program_desc 'Manipulate and view the ASIObjectDictionary.xml and BOD.json files'
 
@@ -27,21 +37,48 @@ module AsiBod
       default_value 'BOD.json'
       flag [:b,:bod_file]
 
+      desc 'View Address'
+      switch :address_view, default_value: true
+
+      desc 'View Name'
+      switch :name_view, default_value: true
+
+      desc 'View Description'
+      switch :description_view, default_value: true
+
+      desc 'View Scale'
+      switch [:s, :scale_view]
+
+      desc 'View Units'
+      switch [:u, :units]
+
       desc 'View the data'
       command :view do |view|
         view.desc "Pretty Print output of the simplified ASI ObjectDictionary as a hash"
         view.command :asi do |view_asi| 
+          view.desc "Output as Json instead of CSV"
+          view.switch [:j, :json]
+
           view_asi.action do |global_options,options,args|
-            pp asi.hash_data
+            if options[GPARENT][:json]
+              puts JSON.pretty_generate asi.hash_data
+            else
+              Dict.put_results(asi.hash_data, which_keys(global_options))
+            end
           end
         end
 
         view.desc "Pretty Print output of the simplified BOD as a hash"
         view.command :bod do |view_bod|
           view_bod.action do |global_options,options,args|
-            pp bod.hash_data
+            if options[GPARENT][:json]
+              puts JSON.pretty_generate bod.hash_data
+            else
+              Dict.put_results(bod.hash_data, which_keys(global_options))
+            end
           end
         end
+        view.default_command :bod
       end
 
       desc 'Find a node in one or both of the dictionaries'
@@ -60,8 +97,13 @@ module AsiBod
         find.command :by_address do |find_by_address| 
           find_by_address.action do |global_options,options,args|
             address = args.first
-            puts "asi: => #{Dict.node_line(asi.hash_data[address.to_i])}" if options[GPARENT][:asi]
-            puts "bod: => #{Dict.node_line(bod.hash_data[address.to_i])}" if options[GPARENT][:bod]
+            # puts "find_by_address global_options #{global_options.inspect} options: #{options.inspect} args: #{args.inspect}"
+            puts "asi: => " +
+                 "#{Dict.node_line(asi.hash_data[address.to_i],
+                    which_keys(global_options))}" if options[GPARENT][:asi]
+            puts "bod: => " +
+                 "#{Dict.node_line(bod.hash_data[address.to_i],
+                    which_keys(global_options))}" if options[GPARENT][:bod]
           end
         end
 
@@ -77,11 +119,15 @@ module AsiBod
             substring = args[1]
             if options[GPARENT][:asi]
               puts "asi: key: #{key} substring: #{substring} => "
-              Dict.put_results(Dict.find_by_key_substring(asi.hash_data, key, substring))
+              Dict.put_results(
+                Dict.find_by_key_substring(asi.hash_data, key, substring),
+                which_keys(global_options))
             end
             if options[GPARENT][:bod]
               puts "bod: key: #{key} substring: #{substring} => "
-              Dict.put_results(Dict.find_by_key_substring(bod.hash_data, key, substring))
+              Dict.put_results(
+                Dict.find_by_key_substring(bod.hash_data, key, substring),
+                which_keys(global_options))
             end
           end
         end
