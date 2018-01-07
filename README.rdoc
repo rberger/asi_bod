@@ -29,5 +29,5 @@ If you want to start with the original or another version of the +BOD.json+ or t
 
 == Detailed Command Line Info
 
-:include:asi_bod.rdoc
+:include: asi_bod.rdoc
 
