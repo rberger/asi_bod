@@ -30,6 +30,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.has_rdoc = true
+  spec.extra_rdoc_files = ['README.rdoc','asi_bod.rdoc']
+  spec.rdoc_options << '--title' << 'asi_bod' << '--main' << 'README.rdoc' << '-ri'
+
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
