@@ -11,12 +11,24 @@ module AsiBod
     include GLI::App
 
     GPARENT = GLI::Command::PARENT
+
+    KEY_ORDER = {address: 0,
+                 name: 1,
+                 description: 2,
+                 scale: 3,
+                 units: 4,
+                 read: 5,
+                 write: 6}
+
     def which_keys(options)
-      options.map do |(k,v)|
+      options.each_with_object([]) do |(k,v), memo|
         if k.is_a?(String) && k.include?("_view")
           # Its a view key
+          next unless options[k]
           # Strip off the '_view' and convert to a symbol
-          k[0..(k.index("_view") - 1)].to_sym
+          key = k[0..(k.index("_view") - 1)].to_sym
+          # Store them in KEY_ORDER
+          memo[KEY_ORDER[key]] = key
         end
       end.compact
     end
@@ -50,7 +62,7 @@ module AsiBod
       switch [:s, :scale_view]
 
       desc 'View Units'
-      switch [:u, :units]
+      switch [:u, :units_view]
 
       desc 'View the data'
       command :view do |view|
