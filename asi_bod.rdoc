@@ -1,20 +1,20 @@
 == asi_bod - Manipulate and view the ASIObjectDictionary.xml and BOD.json files
 
-v0.1.0
+v0.1.2
 
 === Global Options
 === -a|--asi_file arg
 
 Path to the ASIObjectDictionary XML file
 
-[Default Value] ASIObjectDictionary.xml
+[Default Value] /Users/rberger/odrive/IBD Google Drive/Trike/bike-pi/asi_bod/ASIObjectDictionary.xml
 
 
 === -b|--bod_file arg
 
 Path to the BOD JSON file
 
-[Default Value] BOD.json
+[Default Value] /Users/rberger/odrive/IBD Google Drive/Trike/bike-pi/asi_bod/BODm.json
 
 
 === --[no-]address_view
@@ -42,7 +42,7 @@ View Scale
 
 
 
-=== -u|--[no-]units
+=== -u|--[no-]units_view
 View Units
 
 
