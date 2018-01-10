@@ -23,11 +23,24 @@ If you want to start with the original or another version of the +BOD.json+ or t
 +ASIObjectDictionary.xml+ then you can override the defaults with the +-a,
 --asi_file+ or +-b, --bod_file+ flags
 
+== GLOBAL OPTIONS
+    -a, --asi_file=arg      - Path to the ASIObjectDictionary XML file (default: /Users/rberger/odrive/IBD Google
+                              Drive/Trike/bike-pi/asi_bod/ASIObjectDictionary.xml)
+    -b, --bod_file=arg      - Path to the BOD JSON file (default: /Users/rberger/odrive/IBD Google
+                              Drive/Trike/bike-pi/asi_bod/BODm.json)
+    --version               - Display the program version
+    --[no-]address_view     - View Address (default: enabled)
+    --[no-]name_view        - View Name (default: enabled)
+    --[no-]description_view - View Description (default: enabled)
+    -s, --[no-]scale_view   - View Scale
+    -u, --[no-]units_view   - View Units
+    --help                  - Show this message
+
 == COMMANDS
-    find  - Find a node in one or both of the dictionaries
     help  - Shows a list of commands or help for one command
-    merge - Merge the Description from asi to bod
     view  - View the data
+    find  - Find a node in one or both of the dictionaries
+    merge - Merge the Description from asi to bod
 
 == Detailed Command Line Info
 

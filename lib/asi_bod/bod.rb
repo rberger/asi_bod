@@ -1,11 +1,18 @@
 require 'json'
 
 module AsiBod
+
+  # Handle reading in Grin Tech BOD Json file and doing operations on it
   class Bod
     attr_reader :hash_data
 
-    def initialize(global,options,args)
-      @json_data = JSON.parse(File.read(global[:bod_file]))
+    # Returns the path to the default BODm.json file
+    def self.default_file_path
+      File.expand_path('../../../BODm.json', __FILE__)
+    end
+
+    def initialize(params = { bod_file: default_file_path })
+      @json_data = JSON.parse(File.read(params[:bod_file]))
       @hash_data = json_data_to_hash(@json_data)
     end
 
