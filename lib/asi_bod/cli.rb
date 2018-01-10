@@ -41,9 +41,10 @@ module AsiBod
 
       subcommand_option_handling :normal
       arguments :strict
+      sort_help :manually
 
       desc 'Path to the ASIObjectDictionary XML file'
-      default_value AsiBod.default_file_path
+      default_value Asi.default_file_path
       flag [:a, :asi_file]
 
       desc 'Path to the BOD JSON file'
@@ -76,7 +77,11 @@ module AsiBod
             if options[GPARENT][:json]
               puts JSON.pretty_generate asi.hash_data
             else
-              Dict.put_results(asi.hash_data, which_keys(global_options))
+              Dict.specific_keys_per_node(
+                asi.hash_data,
+                which_keys(global_options)) do |address, node|
+                puts node
+              end
             end
           end
         end
@@ -87,7 +92,11 @@ module AsiBod
             if options[GPARENT][:json]
               puts JSON.pretty_generate bod.hash_data
             else
-              Dict.put_results(bod.hash_data, which_keys(global_options))
+              Dict.specific_keys_per_node(
+                bod.hash_data,
+                which_keys(global_options)).each_pair do |address, node|
+                puts node
+              end
             end
           end
         end

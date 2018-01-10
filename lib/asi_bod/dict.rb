@@ -29,9 +29,10 @@ module AsiBod
     # with only the keys specified
     # @param results [Hash] The subset of a full asi or bod Hash
     # @param keys [Array] Optional array of keys to display
-    def self.put_results(results, keys)
-      results.each_pair do |address, node|
-        puts Dict.node_line(node, keys)
+    # @return [Hash<Symbol>,<Hash>] Hash of Hashes with each hash having specified keys
+    def self.specific_keys_per_node(dict, keys)
+      dict.each_with_object({}) do |(key, node), memo|
+        memo[key] = Dict.node_line(node, keys)
       end
     end
 
