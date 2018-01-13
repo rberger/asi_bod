@@ -1,6 +1,6 @@
 == asi_bod - Manipulate and view the ASIObjectDictionary.xml and BOD.json files
 
-v0.1.3
+v0.1.4
 
 === Global Options
 === -a|--asi_file arg

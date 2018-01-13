@@ -141,17 +141,19 @@ module AsiBod
             substring = args[1]
             if options[GPARENT][:asi]
               puts "asi: key: #{key} substring: #{substring} => "
-              Dict.put_results(
-                Dict.find_by_key_substring(asi.hash_data, key, substring),
-                which_keys(global_options)
-              )
+              Dict.find_by_key_substring(asi.hash_data, key, substring,
+                                              which_keys(global_options)
+                                        ).each_pair do |address, node|
+                puts node
+              end
             end
             if options[GPARENT][:bod]
               puts "bod: key: #{key} substring: #{substring} => "
-              Dict.put_results(
-                Dict.find_by_key_substring(bod.hash_data, key, substring),
-                which_keys(global_options)
-              )
+              Dict.find_by_key_substring(bod.hash_data, key, substring,
+                                              which_keys(global_options)
+                                           ).each_pair do |address, node|
+                puts node
+              end
             end
           end
         end
