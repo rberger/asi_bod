@@ -16,6 +16,16 @@ module AsiBod
       @hash_data = json_data_to_hash(@json_data)
     end
 
+    # Make the Dictionary an pleasant hash with Integer top keys (addresses) and
+    # symbols for other keys
+    # @params [Hash<String, Hash>] original_dict The BOD Hash as it came from JSON.parse
+    # @return [Hash<Integer>, <Hash>] Hash of Hashes where the top key is the address 
+    def clean_dict(original_dict)
+      original_dict.each_with_object({}) do |(k, v), memo|
+        memo[k.to_i] = clean_node(v)
+      end
+    end
+
     def json_data_to_hash(json_data)
       json_data.each_with_object({}) do |(k, v), memo|
         memo[k.to_i] = clean_node(v)
