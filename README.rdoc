@@ -42,7 +42,11 @@ If you want to start with the original or another version of the +BOD.json+ or t
     find  - Find a node in one or both of the dictionaries
     merge - Merge the Description from asi to bod
 
-== Detailed Command Line Info
+== License and Copyright
+
+* Copyright (c) 2018 Robert J. Berger
+* License: MIT
+
 
 :include: asi_bod.rdoc
 
